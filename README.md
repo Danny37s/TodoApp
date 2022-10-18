@@ -9,4 +9,4 @@
 
 📌 Hồ Thành Danh $~~~~~~~~~~~~~~~~~~$  MSSV: 20110207
 
-📌 Phan Hoàng Thanh Sơn $~~~~~~$  MSSV: 20110714
+📌 Phan Hoàng Thanh Sơn $~~~~~$ MSSV: 20110714
