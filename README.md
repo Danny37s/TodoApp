@@ -1,6 +1,6 @@
 ## 📔 TodoApp
 
-    Đề tài 14: Xây dựng ứng dụng trên AWS cho phép tạo database và cung cấp API để thêm, xóa sửa trên database
+## Đề tài 14: Xây dựng ứng dụng trên AWS cho phép tạo database và cung cấp API để thêm, xóa sửa trên database ##
 
 #
 ## Thành viên nhóm
