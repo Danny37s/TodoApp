@@ -1,0 +1,16 @@
+{
+  "mssql": {
+    "server": "admin.clmauhxhmlm6.us-east-1.rds.amazonaws.com",
+    "userName": "admin",
+    "password": "12345678",
+    "database": "TodoApp",
+    "debug": true,
+    "connectionTimeout": 300000,
+    "requestTimeout": 300000,
+    "options": {
+      "instanceName": "STUDENTSQLSERVER",
+      "trustServerCertificate": false
+    },
+    "port": 1433
+  }
+}
