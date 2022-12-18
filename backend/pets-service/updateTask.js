@@ -25,16 +25,22 @@ exports.handler = async (event, context, callback) => {
   const createDate = JSON.parse(event.body).createDate;
   const completedDate = JSON.parse(event.body).completedDate;
   const important = JSON.parse(event.body).important;
-  data = await updateTask(userId, taskId, taskTitle, taskDescription, scheduledDate,createDate, completedDate, important ).then(value=>value);
+  const isDone = JSON.parse(event.body).isDone;
+  data = await updateTask(userId, taskId, taskTitle, taskDescription, scheduledDate,createDate, completedDate, important, isDone ).then(value=>value);
   const response = {
     statusCode: 200,
+    headers: {
+      "Access-Control-Allow-Headers" : "Content-Type",
+      "Access-Control-Allow-Origin": "http://localhost:3000",
+      "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+  },
     body: JSON.stringify({data}),
   };
   return response;
   
 };
 
-const updateTask = async (userId, taskId, taskTitle, taskDescription, scheduledDate,createDate, completedDate, important ) => {
+const updateTask = async (userId, taskId, taskTitle, taskDescription, scheduledDate,createDate, completedDate, important, isDone ) => {
     if(!createDate){
         d = new Date()
         createDate = d.toJSON()
@@ -51,6 +57,7 @@ const updateTask = async (userId, taskId, taskTitle, taskDescription, scheduledD
       .input("createDate", sql.DateTime, createDate)
       .input("completedDate", sql.DateTime, completedDate)
       .input("important", sql.Int, important)
+      .input("isDone", sql.Bit, isDone)
       .execute('updateTask') 
     pool.close()
     return {data:tasks.recordsets, status:true};

@@ -23,6 +23,11 @@ exports.handler = async (event, context, callback) => {
   data = await signin(username, password).then((value) => value);
   const response = {
     statusCode: 200,
+    headers: {
+      "Access-Control-Allow-Headers": "X-Requested-With",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+  },
     body: JSON.stringify({ data }),
   };
   return response;

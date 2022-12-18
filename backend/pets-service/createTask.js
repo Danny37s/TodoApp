@@ -25,23 +25,45 @@ exports.handler = async (event, context, callback) => {
   const createDate = JSON.parse(event.body).createDate;
   const completedDate = JSON.parse(event.body).completedDate;
   const important = JSON.parse(event.body).important;
-  data = await createTask(userId, taskId, taskTitle, taskDescription, scheduledDate,createDate, completedDate, important ).then(value=>value);
+  data = await createTask(
+    userId,
+    taskId,
+    taskTitle,
+    taskDescription,
+    scheduledDate,
+    createDate,
+    completedDate,
+    important
+  ).then((value) => value);
   const response = {
     statusCode: 200,
-    body: JSON.stringify({data}),
+    headers: {
+      "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Allow-Origin": "http://localhost:3000",
+      "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+    },
+    body: JSON.stringify({ data }),
   };
   return response;
-  
 };
 
-const createTask = async (userId, taskId, taskTitle, taskDescription, scheduledDate,createDate, completedDate, important ) => {
-    if(!createDate){
-        d = new Date()
-        createDate = d.toJSON()
-    }
+const createTask = async (
+  userId,
+  taskId,
+  taskTitle,
+  taskDescription,
+  scheduledDate,
+  createDate,
+  completedDate,
+  important
+) => {
+  if (!createDate) {
+    d = new Date();
+    createDate = d.toJSON();
+  }
   try {
     let pool = await sql.connect(sqlConfig);
-    let tasks = await pool
+    let addNew = await pool
       .request()
       .input("userId", sql.Int, userId)
       .input("taskId", sql.Int, taskId)
@@ -51,11 +73,15 @@ const createTask = async (userId, taskId, taskTitle, taskDescription, scheduledD
       .input("createDate", sql.DateTime, createDate)
       .input("completedDate", sql.DateTime, completedDate)
       .input("important", sql.Int, important)
-      .execute('insertTask') 
-    pool.close()
-    return {data:tasks.recordsets, status:true};
+      .execute("insertTask");
+    let tasks = await pool
+      .request()
+      .input("userId", sql.Int, userId)
+      .query(`select * from Task WHERE UserID = @userId`);
+    pool.close();
+    return { data: tasks.recordset, status: true };
   } catch (error) {
-    return {data:undefined, status:false, message:error};
+    return { data: undefined, status: false, message: error };
     console.log(error);
   }
 };

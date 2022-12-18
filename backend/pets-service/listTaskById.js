@@ -21,6 +21,11 @@ exports.handler = async (event, context, callback) => {
   data = await tasks(userId).then(value=>value);
   const response = {
     statusCode: 200,
+    headers: {
+      "Access-Control-Allow-Headers" : "Content-Type",
+      "Access-Control-Allow-Origin": "http://localhost:3000",
+      "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+  },
     body: JSON.stringify({data}),
   };
   return response;
@@ -36,7 +41,7 @@ const tasks = async (userID) => {
       .input("userId", sql.Int, userId)
       .query(`select * from Task WHERE UserID = @userId`);
     pool.close()
-    return tasks.recordsets;
+    return tasks.recordset;
   } catch (error) {
     console.log(error);
   }
