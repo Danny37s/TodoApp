@@ -41,6 +41,7 @@ const tasks = async (userID) => {
       .input("userId", sql.Int, userId)
       .query(`select * from Task WHERE UserID = @userId`);
     pool.close()
+    if(tasks.recordset.length <=0) return undefined
     return tasks.recordset;
   } catch (error) {
     console.log(error);

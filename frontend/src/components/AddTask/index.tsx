@@ -57,7 +57,9 @@ const AddTask = () => {
           onChange={(e) => setContent(e.target.value)}
         />
         
-        <Select defaultValue={2} width={"200px"}>
+        <Select defaultValue={2} width={"200px"} 
+          h="46"
+          >
           <option value={3}>High</option>
           <option value={2}>Medium</option>
           <option value={19}>Low</option>

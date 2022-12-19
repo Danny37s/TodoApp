@@ -15,7 +15,9 @@ import {
   FormControl,
   FormHelperText,
   InputRightElement,
-  useToast
+  useToast,
+  useColorModeValue,
+  Text
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import {Link as Rlink, useNavigate} from "react-router-dom"
@@ -29,6 +31,8 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    let color = useColorModeValue("whiteAlpha.400","gray.400")
+    let bg = useColorModeValue("gray.400","whiteAlpha.400")
     const toast = useToast()
     const navigate = useNavigate();
     
@@ -95,26 +99,28 @@ const Login = () => {
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
-                    children={<CFaUserAlt color="gray.300" />}
+                    children={<CFaUserAlt color={color} />}
                   />
-                  <Input type="text" placeholder="username" onChange={handleChangeUsername} />
+                  <Input type="text" placeholder="username" color={color} _hover={{borderColor:"gray.900"}} borderColor={color} onChange={handleChangeUsername} />
                 </InputGroup>
               </FormControl>
-              <FormControl>
+              <FormControl >
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
-                    color="gray.300"
-                    children={<CFaLock color="gray.300" />}
+                    color={color}
+                    children={<CFaLock color={color} />}
                   />
                   <Input
                     type={showPassword ? "text" : "password"}
                     placeholder="Password"
                     onChange={handleChangePassword}
-
+                    color={color}
+                    borderColor={color}
+                    _hover={{borderColor:"gray.900"}}
                   />
                   <InputRightElement width="4.5rem">
-                    <Button h="1.75rem" size="sm" onClick={handleShowClick}>
+                    <Button h="1.75rem" size="sm" color={color} onClick={handleShowClick}>
                       {showPassword ? "Hide" : "Show"}
                     </Button>
                   </InputRightElement>
@@ -136,11 +142,11 @@ const Login = () => {
           </form>
         </Box>
       </Stack>
-      <Box>
+      <Box display="flex" gap="8px" color={color}>
         New to us?{" "}
-        <Link color="teal.500" href="#">
+        <Text color="teal.500">
           <Rlink to="/auth/signup">Sign Up</Rlink>
-        </Link>
+        </Text>
       </Box>
     </Flex>
   );
