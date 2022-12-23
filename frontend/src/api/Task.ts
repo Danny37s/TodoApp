@@ -10,5 +10,11 @@ export const TaskApi = {
     },
     deleteTask(payload:TaskDeletePayloadType){
         return axiosClient.post('/delete-task', payload)
+    },
+    deleteAllTask(userId:number){
+        return axiosClient.post('/delete-all', {userId})
+    },
+    updateTask(payload:TaskPayloadType){
+        return axiosClient.post('/update-task', payload)
     }
 }

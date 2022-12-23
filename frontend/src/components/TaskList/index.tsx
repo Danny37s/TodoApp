@@ -9,21 +9,42 @@ import {
 import { TaskType } from "../../models/Task";
 import emptyImg from "../../assets/images/empty.svg";
 import DeleteTask from "../DeleteTask";
+import DeleteAllTask from "../DeleteAllTask";
+import UpdateTask from "../UpdateTask";
+import { useAppDispatch } from "../../app/hooks";
+import { updateTask } from "../../features/tasks/taskSlice";
+import Cookies from "js-cookie";
+import { ChevronUpIcon, MinusIcon, ChevronDownIcon } from '@chakra-ui/icons'
+
 interface Props {
   tasks?: TaskType[];
   updateTask?: any;
   deleteTask?: any;
   deleteTaskAll?: any;
-  checkTask?: any;
 }
+
+
+
 
 const TaskList: React.FC<Props> = ({
   tasks,
-  updateTask,
   deleteTask,
   deleteTaskAll,
-  checkTask,
 }) => {
+  const userId = Number(Cookies.get('userId'));
+  const dispatch = useAppDispatch()
+
+  const checkTask = (task:TaskType)=>{
+    dispatch(updateTask({
+      taskId: task.TaskID,
+      taskTitle: task.TaskTitle,
+      taskDescription: task.TaskDescription,
+      isDone: !task.isDone,
+      userId: userId,
+      important: task.Important
+    }))
+
+  }
   const color = useColorModeValue("gray.900", "gray.300");
   return (
     <div>
@@ -56,12 +77,13 @@ const TaskList: React.FC<Props> = ({
                 borderRadius="lg"
                 as={task.isDone === true ? "s" : "samp"}
                 cursor="pointer"
-                onClick={() => checkTask(task.TaskID)}
+                onClick={() => checkTask(task)}
               >
                 {task.TaskDescription}
               </Text>
-              <DeleteTask />
-              {/* <UpdateTask task={task} updateTask={updateTask} /> */}
+              <div>{task.Important===1?<ChevronUpIcon  boxSize={6} color={"red.400"}/>:task.Important===2?<MinusIcon boxSize={6} color={"yellow.400"}/>:<ChevronDownIcon boxSize={6} color={"green.400"}/>}</div>
+              <DeleteTask tasks={task} />
+              <UpdateTask tasks={task}/>
             </HStack>
           ))
         ) : (
@@ -71,7 +93,7 @@ const TaskList: React.FC<Props> = ({
         )}
       </VStack>
 
-      <Flex>{/* <DeleteAllTask deleteTaskAll={deleteTaskAll} /> */}</Flex>
+      <Flex><DeleteAllTask/></Flex>
     </div>
   );
 };

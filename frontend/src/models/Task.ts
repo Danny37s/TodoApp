@@ -17,5 +17,5 @@ export type TaskPayloadType = {
 
 export type TaskDeletePayloadType = {
   userId:number,
-  taslId:number
+  taskId:number
 }

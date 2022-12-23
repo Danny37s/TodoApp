@@ -1,4 +1,5 @@
 import {
+  Button,
   Heading,
   IconButton,
   Link,
@@ -10,6 +11,7 @@ import {
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   getTask,
@@ -24,28 +26,34 @@ const Home = () => {
   const dispatch = useAppDispatch();
   const listTask = useAppSelector(selectTask);
   const isLoading = useAppSelector(selectLoading);
-
+  const navigate = useNavigate();
   useEffect(() => {
     loadTask();
   }, []);
-
   const loadTask = async () => {
     const userId = Number(Cookies.get("userId"));
     await dispatch(getTask(userId));
   };
+  const signout = ()=>{
+    Cookies.remove("userId");
+    navigate("/auth/login")
+  }
 
   return isLoading ? (
     <div className="flex w-screen h-screen items-center justify-center"><Spinner size='xl' /></div>
   ) : (
     <VStack p={4} minH="100vh" pb={28}>
-      <IconButton
-        icon={colorMode === "light" ? <FaSun /> : <FaMoon />}
-        isRound={true}
-        size="md"
-        alignSelf="flex-end"
-        onClick={toggleColorMode}
-        aria-label=""
-      />
+      <div className="flex justify-end gap-4 w-screen p-5">
+        <Button onClick={signout}>Sign out</Button>
+        <IconButton
+          icon={colorMode === "light" ? <FaSun /> : <FaMoon />}
+          isRound={true}
+          size="md"
+          alignSelf="flex-end"
+          onClick={toggleColorMode}
+          aria-label=""
+        />
+      </div>
 
       <Heading
         p="5"

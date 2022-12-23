@@ -11,6 +11,10 @@ const AddTask = () => {
   const [content, setContent] = useState("");
   const [statusInput, setStatusInput] = useState(true);
     const dispatch = useAppDispatch()
+    const handleChangeValue = (e:React.ChangeEvent<HTMLSelectElement>)=>{
+        setPriority(Number(e.target.value))
+    }
+    const [priority, setPriority] = useState(2);
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -34,7 +38,7 @@ const AddTask = () => {
       userId: Number(Cookies.get("userId")),
       taskTitle: taskText,
       taskDescription: taskText,
-      important: 1,
+      important: priority,
       isDone: false,
     };
     dispatch(addTask(task))
@@ -57,12 +61,12 @@ const AddTask = () => {
           onChange={(e) => setContent(e.target.value)}
         />
         
-        <Select defaultValue={2} width={"200px"} 
+        <Select defaultValue={priority} onChange={handleChangeValue} width={"200px"} 
           h="46"
           >
-          <option value={3}>High</option>
+          <option value={1}>High</option>
           <option value={2}>Medium</option>
-          <option value={19}>Low</option>
+          <option value={3}>Low</option>
         </Select>
         <Button colorScheme="blue" px="8" pl="10" pr="10" h="46" type="submit">
           Add

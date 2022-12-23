@@ -13,8 +13,8 @@ import {
   Link,
   Avatar,
   FormControl,
-  FormHelperText,
-  InputRightElement
+  InputRightElement,
+  useColorModeValue
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import {Link as Rlink, useNavigate} from "react-router-dom"
@@ -28,6 +28,8 @@ const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [cPassword, setCPassword] = useState("");
+  let color = useColorModeValue("black.900","whiteAlpha.900")
+  let bg = useColorModeValue("whiteAlpha.50", "black.100")
   const toast = useToast()
   const navigate = useNavigate();
   
@@ -71,9 +73,10 @@ const Signup = () => {
       flexDirection="column"
       width="100wh"
       height="100vh"
-      backgroundColor="gray.200"
+      backgroundColor={bg}
       justifyContent="center"
       alignItems="center"
+      marginTop={"-100px"}
     >
       <Stack
         flexDir="column"
@@ -83,12 +86,12 @@ const Signup = () => {
       >
         <Avatar bg="teal.500" />
         <Heading color="teal.400">Welcome</Heading>
-        <Box minW={{ base: "90%", md: "468px" }}>
+        <Box minW={{ base: "90%", md: "468px" }} className="shadow-lg rounded-lg">
           <form>
             <Stack
               spacing={4}
               p="1rem"
-              backgroundColor="whiteAlpha.900"
+              backgroundColor={bg}
               boxShadow="md"
               borderRadius="10px"
             >
@@ -96,7 +99,7 @@ const Signup = () => {
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
-                    children={<CFaUserAlt color="gray.300" />}
+                    children={<CFaUserAlt color={color} />}
                   />
                   <Input type="text" placeholder="username" onChange={handleChangeUsername} />
                 </InputGroup>
@@ -105,8 +108,8 @@ const Signup = () => {
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
-                    color="gray.300"
-                    children={<CFaLock color="gray.300" />}
+                    color={color}
+                    children={<CFaLock color={color} />}
                   />
                   <Input
                     type={showPassword ? "text" : "password"}
@@ -124,11 +127,11 @@ const Signup = () => {
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents="none"
-                    color="gray.300"
-                    children={<CFaLock color="gray.300" />}
+                    color={color}
+                    children={<CFaLock color={color} />}
                   />
                   <Input
-                    type={showPassword ? "text" : "password"}
+                    type={showCPassword ? "text" : "password"}
                     placeholder="Confirm Password"
                     onChange={handleChangeCPassword}
                   />

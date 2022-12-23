@@ -31,8 +31,8 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    let color = useColorModeValue("whiteAlpha.400","gray.400")
-    let bg = useColorModeValue("gray.400","whiteAlpha.400")
+    let color = useColorModeValue("black.900","whiteAlpha.900")
+    let bg = useColorModeValue("whiteAlpha.50", "black.100")
     const toast = useToast()
     const navigate = useNavigate();
     
@@ -74,9 +74,10 @@ const Login = () => {
       flexDirection="column"
       width="100wh"
       height="100vh"
-      backgroundColor="gray.200"
+      backgroundColor={bg}
       justifyContent="center"
       alignItems="center"
+      marginTop={"-100px"}
     >
       <Stack
         flexDir="column"
@@ -86,12 +87,12 @@ const Login = () => {
       >
         <Avatar bg="teal.500" />
         <Heading color="teal.400">Welcome</Heading>
-        <Box minW={{ base: "90%", md: "468px" }}>
+        <Box minW={{ base: "90%", md: "468px" }} className="shadow-lg rounded-lg">
           <form>
             <Stack
               spacing={4}
               p="1rem"
-              backgroundColor="whiteAlpha.900"
+              backgroundColor={bg}
               boxShadow="md"
               borderRadius="10px"
             >
