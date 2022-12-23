@@ -59,7 +59,7 @@ const TaskList: React.FC<Props> = ({
         paddingRight="0"
         paddingLeft="0"
       >
-        {tasks ? (
+        {(tasks && tasks.length >0) ? (
           tasks.map((task: TaskType) => (
             <HStack
               key={task.TaskID + Math.random() * 10}
